@@ -1,28 +1,30 @@
 import React from 'react'
-import Test from './Test'
-import logo from './logo.svg'
-import './App.css'
+import { useSelector, useDispatch } from 'react-redux'
+import Solve from './components/Solve'
+import Fill from './components/Fill'
+import About from './components/About'
+import { setPage } from './redux/actions'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <Test />
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
+function getPageComponent(page) {
+  switch (page) {
+    case 'FILL':
+      return <Fill />
+    case 'SOLVE':
+      return <Solve />
+    default:
+      return <About />
+  }
 }
 
-export default App
+export default function App() {
+  const page = useSelector(state => state.page)
+  const dispatch = useDispatch()
+
+  return <div>
+    <header>
+      <button onClick={() => dispatch(setPage('FILL'))}>New</button>
+      <button onClick={() => dispatch(setPage('ABOUT'))}>About</button>
+    </header>
+    {getPageComponent(page)}
+  </div >
+}
