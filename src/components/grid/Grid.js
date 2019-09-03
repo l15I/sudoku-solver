@@ -16,7 +16,7 @@ export default function (props) {
     justify-content: center;
   `}>
     {grid.map((cell, idx) => <Cell x={cell.x} y={cell.y} key={idx} >
-      {state === 'SOLVE' && !cell.value
+      {state === 'SOLVE'
         ? <CellToSolve x={cell.x} y={cell.y} />
         : <CellToFill x={cell.x} y={cell.y} />}
     </Cell>)}
