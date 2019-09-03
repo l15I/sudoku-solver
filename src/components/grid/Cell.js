@@ -35,6 +35,6 @@ export default function (props) {
     css={styles}
     onClick={() => dispatch({ type: 'SELECT_CELL', x, y })}
   >
-    <span css={css`margin: auto; font-size: 2em;`}>{cell.value}</span>
+    {props.children}
   </div>
 }

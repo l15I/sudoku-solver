@@ -5,6 +5,8 @@ import Grid from '../components/grid/Grid'
 
 export default function (props) {
   const dispatch = useDispatch()
+  dispatch({ type: 'SET_STATE', state: 'FILL' })
+
   useEffect(() => {
     const listener = evt => {
       const { key } = evt
