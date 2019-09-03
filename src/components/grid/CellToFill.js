@@ -12,11 +12,14 @@ export default function (props) {
   `]
   if (cell.selected) {
     styles.push(css`
+      width: 100%;
+      height: 100%;
+      display: grid;
       background-color: lime;
     `)
   }
 
   return <div css={styles}>
-    {cell.value}
-  </div>
+    <span css={{ margin: 'auto' }}>{cell.value}</span>
+  </div >
 }
