@@ -8,7 +8,6 @@ export default function (props) {
   dispatch({ type: 'SET_STATE', state: 'FILL' })
 
   useEffect(() => {
-    //TODO: Add option to delete cell value
     const listener = evt => {
       const { key } = evt
       if (key === 'Delete') {
