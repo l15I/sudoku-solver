@@ -20,6 +20,7 @@ export default function (grid = createEmptyGrid(), action) {
       clone[x * 9 + y].selected = true
       return clone
     case 'FILL_CELL':
+      // TODO: Add validation
       const { value } = action
       return Array.from(grid).map(cell => {
         if (cell.selected) {
