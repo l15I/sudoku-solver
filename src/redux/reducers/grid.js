@@ -28,6 +28,13 @@ export default function (grid = createEmptyGrid(), action) {
         }
         return cell
       })
+    case 'CLEAN_CELL':
+      return Array.from(grid).map(cell => {
+        if (cell.selected) {
+          cell.value = null
+        }
+        return cell
+      })
     default: {
       return grid
     }

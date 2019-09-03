@@ -8,11 +8,16 @@ export default function (props) {
   dispatch({ type: 'SET_STATE', state: 'FILL' })
 
   useEffect(() => {
+    //TODO: Add option to delete cell value
     const listener = evt => {
       const { key } = evt
-      const value = Number(key)
-      if (!isNaN(value)) {
-        dispatch({ type: 'FILL_CELL', value })
+      if (key === 'Delete') {
+        dispatch({ type: 'CLEAN_CELL' })
+      } else {
+        const value = Number(key)
+        if (!isNaN(value)) {
+          dispatch({ type: 'FILL_CELL', value })
+        }
       }
     }
     document.addEventListener('keyup', listener)
