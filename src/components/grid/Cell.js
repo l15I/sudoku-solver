@@ -3,7 +3,13 @@ import { css, jsx } from '@emotion/core'
 import { useDispatch, useSelector } from 'react-redux'
 
 function getBorderStyle(x, y) {
-  return 'border: .1em solid black;'
+  const style = '.1em solid black'
+  return `
+    border-top: ${style};
+    border-left ${style};
+    ${ x === 8 ? `border-bottom: ${style};` : ''}
+    ${ y === 8 ? `border-right: ${style};` : ''}
+  `
 }
 
 export default function (props) {
