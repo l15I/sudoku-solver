@@ -40,10 +40,16 @@ export default function (grid = sudokuFromWikipedia(), action) {
         }
         return cell
       })
-    case 'SOLVE_STEP':
+    case 'SOLVE_ONE_STEP':
       return Array.from(grid).map(cell => {
         if (!cell.value) {
-
+          const cellsToCheck = calculateCellsToCheck(cell.x, cell.y)
+          for (const idx of cellsToCheck) {
+            cell.possibleValues.delete(grid[idx].value)
+          }
+          if (cell.possibleValues.size === 1) {
+            cell.value = cell.possibleValues.values().next().value
+          }
         }
         return cell
       })
@@ -51,4 +57,25 @@ export default function (grid = sudokuFromWikipedia(), action) {
       return grid
     }
   }
+}
+
+function calculateCellsToCheck(cellX, cellY) {
+  const cells = new Set()
+  for (let x = 0; x < 9; x++) {
+    cells.add(x * 9 + cellY)
+  }
+  for (let y = 0; y < 9; y++) {
+    cells.add(cellX * 9 + y)
+  }
+
+  const xStart = Math.floor(cellX / 3) * 3
+  const yStart = Math.floor(cellY / 3) * 3
+
+  for (let x = xStart; x < xStart + 3; x++) {
+    for (let y = yStart; y < yStart + 3; y++) {
+      cells.add(x * 9 + y)
+    }
+  }
+  cells.delete(cellX * 9 + cellY)
+  return cells
 }
