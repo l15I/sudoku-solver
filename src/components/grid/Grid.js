@@ -17,7 +17,6 @@ function getCellBorderStyle(x, y) {
 
 export default function (props) {
   const grid = useSelector(s => s.grid)
-  const state = useSelector(s => s.state)
 
   const cellSize = '4em'
 
@@ -36,7 +35,7 @@ export default function (props) {
       ${getCellBorderStyle(cell.x, cell.y)}
     `}
     >
-      {state === 'SOLVE'
+      {props.solving
         ? <CellToSolve x={cell.x} y={cell.y} />
         : <CellToFill x={cell.x} y={cell.y} />}
     </div>)}
