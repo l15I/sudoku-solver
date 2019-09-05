@@ -41,6 +41,7 @@ export default function (grid = sudokuFromWikipedia(), action) {
         return cell
       })
     case 'SOLVE_ONE_STEP':
+      // TODO: Add check if sudoku cannot be solved
       return Array.from(grid).map(cell => {
         if (!cell.value) {
           const cellsToCheck = calculateCellsToCheck(cell.x, cell.y)

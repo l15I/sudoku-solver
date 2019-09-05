@@ -21,7 +21,7 @@ export default function (props) {
     }
     document.addEventListener('keyup', listener)
     return () => document.removeEventListener('keyup', listener)
-  })
+  }, [dispatch])
   return <div>
     <h1>Fill</h1>
     <Link to='/solve'>Solve</Link>
