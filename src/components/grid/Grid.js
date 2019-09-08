@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/core'
 import { useSelector } from 'react-redux'
 import CellToFill from './CellToFill'
 import CellToSolve from './CellToSolve'
+import Cell from './Cell'
 
 function getCellBorderStyle(x, y) {
   const style = '.1em solid black'
@@ -20,6 +21,16 @@ export default function (props) {
 
   const cellSize = '4em'
 
+  let CellComponent = CellToFill
+
+  if (props.solving) {
+    if (props.interactive) {
+      CellComponent = CellToSolve
+    } else {
+      CellComponent = Cell
+    }
+  }
+
   return <div css={css`
     display: grid;
     grid-template-columns: ${`${cellSize} `.repeat(9)};
@@ -35,9 +46,7 @@ export default function (props) {
       ${getCellBorderStyle(cell.x, cell.y)}
     `}
     >
-      {props.solving
-        ? <CellToSolve x={cell.x} y={cell.y} />
-        : <CellToFill x={cell.x} y={cell.y} />}
+      <CellComponent x={cell.x} y={cell.y} />
     </div>)}
   </div>
 }

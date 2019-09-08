@@ -107,14 +107,16 @@ export default function (state = sudokuFromWikipedia(), action) {
 
       if (sthChanged) {
         return {
-          ...state,
+          solved: false,
+          error: false,
           grid: afterStep
         }
       }
 
       if (afterStep.some(cell => !cell.value)) {
         return {
-          ...state,
+          grid: afterStep,
+          solved: true,
           error: 'This sudoku is unsolvable'
         }
       }
@@ -145,16 +147,16 @@ export default function (state = sudokuFromWikipedia(), action) {
 
       if (sudoku.some(cell => !cell.value)) {
         return {
-          ...state,
+          solved: true,
           grid: sudoku,
           error: 'This sudoku is unsolvable'
         }
       }
 
       return {
-        ...state,
         grid: sudoku,
-        solved: true
+        solved: true,
+        error: null
       }
 
     default: {

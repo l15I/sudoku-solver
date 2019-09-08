@@ -4,12 +4,12 @@ import Grid from '../components/grid/Grid'
 
 export default function (props) {
   const dispatch = useDispatch()
-  const grid = useSelector(s => s.sudoku.grid)
+  const { grid, solved } = useSelector(s => s.sudoku)
   const [solving, setSolving] = useState(false)
   const [interactive, setInteractive] = useState(true)
 
   useEffect(() => {
-    if (!solving) {
+    if (!solving && !solved) {
       const listener = evt => {
         const { key } = evt
         if (key === 'Delete') {
@@ -24,24 +24,22 @@ export default function (props) {
       document.addEventListener('keyup', listener)
       return () => document.removeEventListener('keyup', listener)
     }
-  }, [dispatch, solving])
+  }, [dispatch, solved, solving])
 
   useEffect(() => {
-    if (solving) {
-      if (grid.filter(cell => !cell.value).length > 0) {
-        if (interactive) {
-          const id = setTimeout(() => dispatch({ type: 'SOLVE_ONE_STEP' }), 1000)
-          return () => clearTimeout(id)
-        }
-        dispatch({ type: 'SOLVE' })
+    if (solving && !solved) {
+      if (interactive) {
+        const id = setTimeout(() => dispatch({ type: 'SOLVE_ONE_STEP' }), 1000)
+        return () => clearTimeout(id)
       }
+      dispatch({ type: 'SOLVE' })
     }
-  }, [dispatch, grid, interactive, solving])
+  }, [dispatch, grid, interactive, solved, solving])
 
   return <div>
     <h1>Solve</h1>
-    <Grid solving={solving} />
-    <button onClick={() => setSolving(!solving)}>{solving ? 'Stop' : 'Solve'}</button>
+    <Grid solving={solving} interactive={interactive} />
+    <button onClick={() => setSolving(!solving)} disabled={solved}>{solving && !solved ? 'Stop' : 'Solve'}</button>
     <label>
       <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)} />
       Interactive
