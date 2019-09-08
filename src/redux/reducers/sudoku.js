@@ -30,9 +30,11 @@ export default function (state = sudokuFromWikipedia(), action) {
   switch (action.type) {
     case 'SELECT_CELL':
       const { x, y } = action
-      const clone = Array.from(state.grid)
-      clone.forEach(cell => cell.selected = false)
-      clone[x * 9 + y].selected = true
+      const clone = immer(state.grid, draftGrid => {
+        draftGrid.forEach(cell => cell.selected = false)
+        draftGrid[x * 9 + y].selected = true
+      })
+
       return {
         ...state,
         grid: clone
@@ -45,23 +47,28 @@ export default function (state = sudokuFromWikipedia(), action) {
         return state
       }
 
-      const cellsToCheck = calculateCellsToCheck(selectedCell.x, selectedCell.y)
-      selectedCell.possibleValues = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9])
-      for (const idx of cellsToCheck) {
-        selectedCell.possibleValues.delete(state.grid[idx].value)
-      }
-      if (selectedCell.possibleValues.has(value)) {
-        selectedCell.value = value
-        let idx = selectedCell.x * 9 + selectedCell.y
+      const modifiedCell = immer(selectedCell, draftCell => {
+        draftCell.possibleValues = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9])
+        for (const idx of calculateCellsIndexesToCheck(draftCell.x, draftCell.y)) {
+          draftCell.possibleValues.delete(state.grid[idx].value)
+        }
+        if (draftCell.possibleValues.has(value)) {
+          draftCell.value = value
+        }
+      })
+
+      if (modifiedCell.value === value) {
+        let idx = modifiedCell.x * 9 + modifiedCell.y
         return {
           ...state,
           grid: [
             ...state.grid.slice(0, idx),
-            selectedCell,
+            modifiedCell,
             ...state.grid.slice(idx + 1)
           ]
         }
       }
+
       return {
         ...state,
         error: `Value ${value} is not allowed here`
@@ -70,12 +77,11 @@ export default function (state = sudokuFromWikipedia(), action) {
     case 'CLEAN_CELL':
       return {
         ...state,
-        grid: Array.from(state.grid).map(cell => {
+        grid: immer(state.grid, draftGrid => draftGrid.forEach(cell => {
           if (cell.selected) {
             cell.value = null
           }
-          return cell
-        })
+        }))
       }
 
     case 'CLEAN_ERROR_INFO': {
@@ -87,9 +93,9 @@ export default function (state = sudokuFromWikipedia(), action) {
 
     case 'SOLVE_ONE_STEP':
       let sthChanged = false
-      const afterStep = Array.from(state.grid).map(cell => {
+      const afterStep = immer(state.grid, draftGrid => draftGrid.forEach(cell => {
         if (!cell.value) {
-          const cellsToCheck = calculateCellsToCheck(cell.x, cell.y)
+          const cellsToCheck = calculateCellsIndexesToCheck(cell.x, cell.y)
           for (const idx of cellsToCheck) {
             sthChanged = cell.possibleValues.delete(state.grid[idx].value) || sthChanged
           }
@@ -97,8 +103,7 @@ export default function (state = sudokuFromWikipedia(), action) {
             cell.value = cell.possibleValues.values().next().value
           }
         }
-        return cell
-      })
+      }))
 
       if (sthChanged) {
         return {
@@ -125,7 +130,7 @@ export default function (state = sudokuFromWikipedia(), action) {
           stepChanged = false
           for (let cell of draftGrid) {
             if (!cell.value) {
-              const cellsToCheck = calculateCellsToCheck(cell.x, cell.y)
+              const cellsToCheck = calculateCellsIndexesToCheck(cell.x, cell.y)
               for (const idx of cellsToCheck) {
                 stepChanged = cell.possibleValues.delete(draftGrid[idx].value) || stepChanged
               }
@@ -157,7 +162,7 @@ export default function (state = sudokuFromWikipedia(), action) {
   }
 }
 
-function calculateCellsToCheck(cellX, cellY) {
+function calculateCellsIndexesToCheck(cellX, cellY) {
   const cells = new Set()
   for (let x = 0; x < 9; x++) {
     cells.add(x * 9 + cellY)
