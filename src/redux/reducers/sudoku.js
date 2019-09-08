@@ -1,3 +1,5 @@
+import immer from 'immer'
+
 function createEmptyGrid() {
   const grid = new Array(81)
   for (let x = 0; x < 9; x++)
@@ -117,9 +119,37 @@ export default function (state = sudokuFromWikipedia(), action) {
         solved: true
       }
     case 'SOLVE':
-      // TODO: implement solving in one step
-      console.log('implement')
-      return state
+      let sudoku = immer(state.grid, draftGrid => {
+        let stepChanged
+        do {
+          stepChanged = false
+          for (let cell of draftGrid) {
+            if (!cell.value) {
+              const cellsToCheck = calculateCellsToCheck(cell.x, cell.y)
+              for (const idx of cellsToCheck) {
+                stepChanged = cell.possibleValues.delete(draftGrid[idx].value) || stepChanged
+              }
+              if (cell.possibleValues.size === 1) {
+                cell.value = cell.possibleValues.values().next().value
+              }
+            }
+          }
+        } while (stepChanged)
+      })
+
+      if (sudoku.some(cell => !cell.value)) {
+        return {
+          ...state,
+          grid: sudoku,
+          error: 'This sudoku is unsolvable'
+        }
+      }
+
+      return {
+        ...state,
+        grid: sudoku,
+        solved: true
+      }
 
     default: {
       return state
