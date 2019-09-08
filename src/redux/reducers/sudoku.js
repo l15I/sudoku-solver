@@ -97,7 +97,7 @@ export default function (state = sudokuFromWikipedia(), action) {
         if (!cell.value) {
           const cellsToCheck = calculateCellsIndexesToCheck(cell.x, cell.y)
           for (const idx of cellsToCheck) {
-            sthChanged = cell.possibleValues.delete(state.grid[idx].value) || sthChanged
+            sthChanged = cell.possibleValues.delete(draftGrid[idx].value) || sthChanged
           }
           if (cell.possibleValues.size === 1) {
             cell.value = cell.possibleValues.values().next().value
@@ -123,6 +123,7 @@ export default function (state = sudokuFromWikipedia(), action) {
         ...state,
         solved: true
       }
+
     case 'SOLVE':
       let sudoku = immer(state.grid, draftGrid => {
         let stepChanged
