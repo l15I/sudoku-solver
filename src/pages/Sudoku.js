@@ -28,7 +28,6 @@ export default function (props) {
 
   useEffect(() => {
     if (solving) {
-      // TODO: implement interface to [ change | switch off ] delay
       if (grid.filter(cell => !cell.value).length > 0) {
         if (interactive) {
           const id = setTimeout(() => dispatch({ type: 'SOLVE_ONE_STEP' }), 1000)
