@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 export default function (props) {
   const { x, y } = props
-  const cell = useSelector(state => state.grid[x * 9 + y])
+  const cell = useSelector(state => state.sudoku.grid[x * 9 + y])
 
   if (cell.value) {
     return <div css={css`

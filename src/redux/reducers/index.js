@@ -1,4 +1,4 @@
 import { combineReducers } from 'redux'
-import grid from './grid'
+import sudoku from './sudoku'
 
-export default combineReducers({ grid })
+export default combineReducers({ sudoku })

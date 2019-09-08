@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 export default function (props) {
   const { x, y } = props
   const dispatch = useDispatch()
-  const cell = useSelector(state => state.grid[x * 9 + y])
+  const cell = useSelector(state => state.sudoku.grid[x * 9 + y])
 
   const styles = [css`
     margin: auto;

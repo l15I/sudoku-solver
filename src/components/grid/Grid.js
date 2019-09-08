@@ -16,7 +16,7 @@ function getCellBorderStyle(x, y) {
 }
 
 export default function (props) {
-  const grid = useSelector(s => s.grid)
+  const grid = useSelector(s => s.sudoku.grid)
 
   const cellSize = '4em'
 
