@@ -1,9 +1,5 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import { useSelector } from 'react-redux'
-import CellToFill from './CellToFill'
-import CellToSolve from './CellToSolve'
-import Cell from './Cell'
 
 function getCellBorderStyle(x, y) {
   const style = '.1em solid black'
@@ -17,19 +13,7 @@ function getCellBorderStyle(x, y) {
 }
 
 export default function (props) {
-  const grid = useSelector(s => s.sudoku.grid)
-
   const cellSize = '4em'
-
-  let CellComponent = CellToFill
-
-  if (props.solving) {
-    if (props.interactive) {
-      CellComponent = CellToSolve
-    } else {
-      CellComponent = Cell
-    }
-  }
 
   return <div css={css`
     display: grid;
@@ -37,16 +21,17 @@ export default function (props) {
     grid-template-rows: ${`${cellSize} `.repeat(9)};
     justify-content: center;
   `}>
-    {grid.map((cell, idx) => <div
+    {props.children.map((child, idx) => <div
       key={idx}
       css={css`
       height: ${cellSize};
       width: ${cellSize};
       display: grid;
-      ${getCellBorderStyle(cell.x, cell.y)}
+      ${getCellBorderStyle(Math.floor(idx / 9), idx % 9)}
     `}
     >
-      <CellComponent x={cell.x} y={cell.y} />
-    </div>)}
+      {child}
+    </div>
+    )}
   </div>
 }
