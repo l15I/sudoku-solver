@@ -1,6 +1,6 @@
 import immer from 'immer'
 
-function createEmptyGrid() {
+function createEmpty() {
   const grid = new Array(81)
   for (let x = 0; x < 9; x++)
     for (let y = 0; y < 9; y++)
@@ -26,7 +26,7 @@ function sudokuFromWikipedia() {
   }
 }
 
-export default function (state = sudokuFromWikipedia(), action) {
+export default function (state = createEmpty(), action) {
   switch (action.type) {
     case 'SELECT_CELL':
       const { x, y } = action
@@ -83,6 +83,12 @@ export default function (state = sudokuFromWikipedia(), action) {
           }
         }))
       }
+
+    case 'FILL_FROM_WIKI':
+      return sudokuFromWikipedia()
+
+    case 'RESET':
+      return createEmpty()
 
     case 'CLEAN_ERROR_INFO': {
       return {

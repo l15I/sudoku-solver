@@ -17,7 +17,8 @@ export default function (props) {
   `]
   if (cell.selected) {
     styles.push(css`
-      background-color: lime;
+      background-color: black;
+      color: white;
     `)
   }
 

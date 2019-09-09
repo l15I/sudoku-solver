@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react'
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Grid from '../components/grid/Grid'
 import CellToFill from '../components/grid/CellToFill'
 import CellToSolve from '../components/grid/CellToSolve'
 import Cell from '../components/grid/Cell'
+import LinkButton from '../components/base/LinkButton'
+import Button from '../components/base/Button'
 
 function getCellComponent({ solving, interactive }) {
   if (!solving) {
@@ -17,7 +21,7 @@ function getCellComponent({ solving, interactive }) {
   return CellToSolve
 }
 
-export default function (props) {
+export default function () {
   const dispatch = useDispatch()
   const { grid, solved } = useSelector(s => s.sudoku)
   const [solving, setSolving] = useState(false)
@@ -54,14 +58,27 @@ export default function (props) {
   const CellComponent = getCellComponent({ solving, interactive })
 
   return <div>
-    <h1>Solve</h1>
     <Grid>
       {grid.map(cell => <CellComponent x={cell.x} y={cell.y} />)}
     </Grid>
-    <button onClick={() => setSolving(!solving)} disabled={solved}>{solving && !solved ? 'Stop' : 'Solve'}</button>
-    <label>
-      <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)} />
-      Interactive
+    <div css={css`
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    `}>
+      <div>
+        <LinkButton onClick={() => dispatch({ type: 'RESET' })}>
+          Reset
+        </LinkButton>
+        <LinkButton onClick={() => dispatch({ type: 'FILL_FROM_WIKI' })}>
+          Fill example from wikipedia
+        </LinkButton>
+      </div>
+      <Button onClick={() => setSolving(!solving)} disabled={solved}>{solving ? 'Stop' : 'Solve'}</Button>
+      <label>
+        <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)} />
+        Interactive
     </label>
-  </div>
+    </div>
+  </div >
 }

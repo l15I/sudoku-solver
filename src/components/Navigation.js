@@ -2,8 +2,6 @@
 import { css, jsx } from '@emotion/core'
 import { Link } from 'react-router-dom'
 
-
-
 export default function () {
   return <nav css={css`
     display: flex;
