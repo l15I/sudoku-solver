@@ -4,12 +4,17 @@ import { css, jsx } from '@emotion/core'
 function getCellBorderStyle(x, y) {
   const style = '.1em solid black'
   const boldStyle = '.2em solid black'
-  return `
+  const styles = [`
     border-top: ${x % 3 === 0 ? boldStyle : style};
     border-left ${y % 3 === 0 ? boldStyle : style};
-    ${ x === 8 ? `border-bottom: ${boldStyle};` : ''}
-    ${ y === 8 ? `border-right: ${boldStyle};` : ''}
-  `
+  `]
+  if (x === 8) {
+    styles.push(`border-bottom: ${boldStyle};`)
+  }
+  if (y === 8) {
+    styles.push(`border-right: ${boldStyle};`)
+  }
+  return styles.join('')
 }
 
 export default function (props) {

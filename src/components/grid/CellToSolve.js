@@ -15,7 +15,7 @@ export default function (props) {
 
   const values = []
   for (let i = 1; i <= 9; i++) {
-    const key = [cell.x, cell.y, i].join('-')
+    const key = [cell.x, cell.y].join()
     values.push(
       <div key={key} css={{ opacity: cell.possibleValues.has(i) ? 1 : 0.2 }}>{i}</div>
     )

@@ -75,10 +75,11 @@ export default function () {
         </LinkButton>
       </div>
       <Button onClick={() => setSolving(!solving)} disabled={solved}>{solving ? 'Stop' : 'Solve'}</Button>
-      <label>
-        <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)} />
-        Interactive
-    </label>
+      <label css={{ paddingTop: '.5em', cursor: 'pointer' }}>
+        <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)}
+          css={{ margin: '.5em' }} />
+        <span css={{ fontStyle: 'italic' }}>interactive</span>
+      </label>
     </div>
   </div >
 }
