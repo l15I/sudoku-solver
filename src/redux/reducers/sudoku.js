@@ -14,7 +14,7 @@ function createEmpty() {
   return {
     grid,
     error: null,
-    solved: false
+    status: 'fill'
   }
 }
 
@@ -22,7 +22,7 @@ function sudokuFromWikipedia() {
   return {
     grid: [{ 'x': 0, 'y': 0, 'value': 5, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 1, 'value': 3, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 3, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 4, 'value': 7, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 5, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 7, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 0, 'y': 8, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 0, 'value': 6, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 1, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 3, 'value': 1, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 4, 'value': 9, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 5, 'value': 5, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 7, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 1, 'y': 8, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 0, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 1, 'value': 9, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 2, 'value': 8, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 3, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 4, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 5, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 7, 'value': 6, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 2, 'y': 8, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 0, 'value': 8, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 1, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 3, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 4, 'value': 6, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 5, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 7, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 3, 'y': 8, 'value': 3, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 0, 'value': 4, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 1, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 3, 'value': 8, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 4, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 5, 'value': 3, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 7, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 4, 'y': 8, 'value': 1, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 0, 'value': 7, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 1, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 3, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 4, 'value': 2, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 5, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 7, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 5, 'y': 8, 'value': 6, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 0, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 1, 'value': 6, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 3, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 4, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 5, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 6, 'value': 2, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 7, 'value': 8, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 6, 'y': 8, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 0, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 1, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 3, 'value': 4, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 4, 'value': 1, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 5, 'value': 9, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 7, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 7, 'y': 8, 'value': 5, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 0, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 1, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 2, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 3, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 4, 'value': 8, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 5, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 6, 'value': null, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 7, 'value': 7, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }, { 'x': 8, 'y': 8, 'value': 9, 'selected': false, possibleValues: new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]) }],
     error: null,
-    solved: false
+    status: 'fill'
   }
 }
 
@@ -113,7 +113,7 @@ export default function (state = createEmpty(), action) {
 
       if (sthChanged) {
         return {
-          solved: false,
+          status: afterStep.every(c => c.value) ? 'end' : 'solving',
           error: false,
           grid: afterStep
         }
@@ -122,14 +122,14 @@ export default function (state = createEmpty(), action) {
       if (afterStep.some(cell => !cell.value)) {
         return {
           grid: afterStep,
-          solved: true,
+          status: 'end',
           error: 'This sudoku is unsolvable'
         }
       }
 
       return {
         ...state,
-        solved: true
+        status: 'end'
       }
 
     case 'SOLVE':
@@ -153,7 +153,7 @@ export default function (state = createEmpty(), action) {
 
       if (sudoku.some(cell => !cell.value)) {
         return {
-          solved: true,
+          status: 'end',
           grid: sudoku,
           error: 'This sudoku is unsolvable'
         }
@@ -161,7 +161,7 @@ export default function (state = createEmpty(), action) {
 
       return {
         grid: sudoku,
-        solved: true,
+        status: 'end',
         error: null
       }
 

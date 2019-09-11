@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Grid from '../components/grid/Grid'
 import CellToFill from '../components/grid/CellToFill'
@@ -9,26 +9,29 @@ import Cell from '../components/grid/Cell'
 import LinkButton from '../components/base/LinkButton'
 import Button from '../components/base/Button'
 
-function getCellComponent({ solving, interactive }) {
-  if (!solving) {
-    return CellToFill
+function getCellComponent({ status, interactive }) {
+  switch (status) {
+    case 'fill':
+      return CellToFill
+    case 'solving':
+      return CellToSolve
+    default:
+      return Cell
   }
-
-  if (!interactive) {
-    return Cell
-  }
-
-  return CellToSolve
 }
 
 export default function () {
   const dispatch = useDispatch()
-  const { grid, solved } = useSelector(s => s.sudoku)
-  const [solving, setSolving] = useState(false)
+  const grid = useSelector(s => s.sudoku.grid)
+  const status = useSelector(s => s.sudoku.status)
   const [interactive, setInteractive] = useState(true)
 
+  const solve = useCallback(() => {
+    dispatch({ type: interactive ? 'SOLVE_ONE_STEP' : 'SOLVE' })
+  }, [dispatch, interactive])
+
   useEffect(() => {
-    if (!solving && !solved) {
+    if (status === 'fill') {
       const listener = evt => {
         const { key } = evt
         if (key === 'Delete') {
@@ -43,23 +46,23 @@ export default function () {
       document.addEventListener('keyup', listener)
       return () => document.removeEventListener('keyup', listener)
     }
-  }, [dispatch, solved, solving])
+  }, [dispatch, status])
 
   useEffect(() => {
-    if (solving && !solved) {
-      if (interactive) {
-        const id = setTimeout(() => dispatch({ type: 'SOLVE_ONE_STEP' }), 1000)
-        return () => clearTimeout(id)
+    if (interactive && status === 'solving') {
+      const id = setInterval(() => dispatch({ type: 'SOLVE_ONE_STEP' }), 1000)
+      if (status === 'end') {
+        clearInterval(id)
       }
-      dispatch({ type: 'SOLVE' })
+      return () => clearInterval(id)
     }
-  }, [dispatch, grid, interactive, solved, solving])
+  }, [dispatch, interactive, status])
 
-  const CellComponent = getCellComponent({ solving, interactive })
+  const CellComponent = getCellComponent({ status, interactive })
 
   return <div>
     <Grid>
-      {grid.map(cell => <CellComponent x={cell.x} y={cell.y} />)}
+      {grid.map(cell => <CellComponent key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y} />)}
     </Grid>
     <div css={css`
       display: flex;
@@ -74,7 +77,7 @@ export default function () {
           Fill example from wikipedia
         </LinkButton>
       </div>
-      <Button onClick={() => setSolving(!solving)} disabled={solved}>{solving ? 'Stop' : 'Solve'}</Button>
+      <Button onClick={solve} disabled={status === 'end'}>{status === 'solving' ? 'Stop' : 'Solve'}</Button>
       <label css={{ paddingTop: '.5em', cursor: 'pointer' }}>
         <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)}
           css={{ margin: '.5em' }} />

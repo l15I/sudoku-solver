@@ -31,5 +31,6 @@ export default function (props) {
       return () => clearTimeout(id)
     }
   }, [dispatch, error])
+
   return <div css={style}>{error || prevError.current}</div >
 }
