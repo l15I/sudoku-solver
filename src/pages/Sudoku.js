@@ -9,7 +9,6 @@ import Cell from '../components/grid/Cell'
 import LinkButton from '../components/base/LinkButton'
 import Button from '../components/base/Button'
 
-
 export default function () {
   const dispatch = useDispatch()
   const grid = useSelector(s => s.sudoku.grid)
@@ -72,7 +71,9 @@ export default function () {
         <LinkButton onClick={reset}>Reset</LinkButton>
         <LinkButton onClick={fillFromWiki}>Fill example from wikipedia</LinkButton>
       </div>
-      <Button onClick={solve} disabled={status === 'end'}>{status === 'solving' ? 'Stop' : 'Solve'}</Button>
+      <Button onClick={solve} disabled={status === 'end'}>
+        {status === 'solving' ? 'Stop' : 'Solve'}
+      </Button>
       <label css={{ paddingTop: '.5em', cursor: 'pointer' }}>
         <input type='checkbox' checked={interactive} onChange={() => setInteractive(!interactive)}
           css={{ margin: '.5em' }} />
