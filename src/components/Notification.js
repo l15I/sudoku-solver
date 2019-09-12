@@ -12,20 +12,26 @@ export default function (props) {
     prevError.current = error
   })
 
-  const [top, setTop] = useState(-100)
+  const [opacity, setOpacity] = useState(0)
   const style = css`
-    color: blue;
+    color: white;
+    background-color: black;
+    text-align: center;
+    padding: 1em;
     position: absolute;
-    top: ${top}px;
-    right: 10px;
-    transition: top .5s linear;
+    left: 50%;
+    top: 1em;
+    transform: translate(-50%);
+    border-radius: .25em;
+    opacity: ${opacity};
+    transition: opacity .5s linear;
   `
 
   useEffect(() => {
     if (error) {
-      setTop(10)
+      setOpacity(0.9)
       const id = setTimeout(() => {
-        setTop(-100)
+        setOpacity(0)
         dispatch({ type: 'CLEAN_ERROR_INFO' })
       }, 3000)
       return () => clearTimeout(id)
