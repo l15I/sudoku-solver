@@ -9,16 +9,6 @@ import Cell from '../components/grid/Cell'
 import LinkButton from '../components/base/LinkButton'
 import Button from '../components/base/Button'
 
-function getCellComponent({ status, interactive }) {
-  switch (status) {
-    case 'fill':
-      return CellToFill
-    case 'solving':
-      return CellToSolve
-    default:
-      return Cell
-  }
-}
 
 export default function () {
   const dispatch = useDispatch()
@@ -26,9 +16,18 @@ export default function () {
   const status = useSelector(s => s.sudoku.status)
   const [interactive, setInteractive] = useState(true)
 
-  const solve = useCallback(() => {
-    dispatch({ type: interactive ? 'SOLVE_ONE_STEP' : 'SOLVE' })
-  }, [dispatch, interactive])
+  const solve = useCallback(
+    () => dispatch({ type: interactive ? 'SOLVE_ONE_STEP' : 'SOLVE' }),
+    [dispatch, interactive]
+  )
+  const reset = useCallback(
+    () => dispatch({ type: 'RESET' }),
+    [dispatch]
+  )
+  const fillFromWiki = useCallback(
+    () => dispatch({ type: 'FILL_FROM_WIKI' }),
+    [dispatch]
+  )
 
   useEffect(() => {
     if (status === 'fill') {
@@ -58,7 +57,7 @@ export default function () {
     }
   }, [dispatch, interactive, status])
 
-  const CellComponent = getCellComponent({ status, interactive })
+  const CellComponent = getCellComponent(status)
 
   return <div>
     <Grid>
@@ -70,12 +69,8 @@ export default function () {
       align-items: center;
     `}>
       <div>
-        <LinkButton onClick={() => dispatch({ type: 'RESET' })}>
-          Reset
-        </LinkButton>
-        <LinkButton onClick={() => dispatch({ type: 'FILL_FROM_WIKI' })}>
-          Fill example from wikipedia
-        </LinkButton>
+        <LinkButton onClick={reset}>Reset</LinkButton>
+        <LinkButton onClick={fillFromWiki}>Fill example from wikipedia</LinkButton>
       </div>
       <Button onClick={solve} disabled={status === 'end'}>{status === 'solving' ? 'Stop' : 'Solve'}</Button>
       <label css={{ paddingTop: '.5em', cursor: 'pointer' }}>
@@ -85,4 +80,16 @@ export default function () {
       </label>
     </div>
   </div >
+
+  function getCellComponent(status) {
+    switch (status) {
+      case 'fill':
+        return CellToFill
+      case 'solving':
+        return CellToSolve
+      default:
+        return Cell
+    }
+  }
+
 }
