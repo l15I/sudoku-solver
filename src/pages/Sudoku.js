@@ -13,7 +13,7 @@ export default function () {
   const dispatch = useDispatch()
   const grid = useSelector(s => s.sudoku.grid)
   const status = useSelector(s => s.sudoku.status)
-  const [interactive, setInteractive] = useState(true)
+  const [interactive, setInteractive] = useState(false)
 
   const solve = useCallback(
     () => dispatch({ type: interactive ? 'SOLVE_ONE_STEP' : 'SOLVE' }),
