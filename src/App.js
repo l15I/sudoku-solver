@@ -6,7 +6,7 @@ import Navigation from './components/Navigation'
 import Notification from './components/Notification'
 
 export default function App() {
-  return <Router>
+  return <Router basename='/sudoku-solver'>
     <Navigation />
     <Notification />
     <Route path='/' exact component={About} />
